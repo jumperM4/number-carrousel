@@ -1,21 +1,24 @@
 const body = document.querySelector("body");
 const div = document.createElement("div");
 body.append(div);
-const arrOfDates = [];
+const allDaysDiv = document.createElement("all-days");
+div.append(allDaysDiv);
+const days = [];
+let counter = 0;
 
 function getDays(counter) {
   const date = new Date();
   let day = date.getDate() + counter;
 
   for (let i = 0; i < 3; i++) {
-    if (arrOfDates.length === 0) {
-      arrOfDates.push(day);
+    if (days.length === 0) {
+      days.push(day);
     } else {
       day += 1;
-      arrOfDates.push(day);
+      days.push(day);
     }
   }
-  return arrOfDates;
+  return days;
 }
 
 function createBtns() {
@@ -29,30 +32,43 @@ function createBtns() {
   div.prepend(backBtn);
 }
 
-function dates(num) {
-  const arrOfDays = getDays(num);
+function renderDates(num) {
+  const allDays = getDays(num);
 
-  arrOfDays.forEach((day) => {
+  allDays.forEach((day) => {
     const span = document.createElement("span");
-    span.className = "day";
     span.textContent = day;
+    span.className = "day";
 
-    div.append(span);
+    allDaysDiv.append(span);
   });
 }
 
-dates(0);
+renderDates(counter);
 createBtns();
 
 const forwardButton = document.querySelector(".forward-button");
-console.log(arrOfDates);
 forwardButton.addEventListener("click", () => {
-  for (let i = 0; i < arrOfDates.length; ) {
-    arrOfDates.shift();
+  for (let i = 0; i < days.length; ) {
+    days.shift();
   }
-
-  const allDates = document.querySelectorAll(".day");
-  allDates.forEach((date) => {
+  document.querySelectorAll(".day").forEach((date) => {
     date.remove();
   });
+
+  renderDates(counter + 1);
+  counter++;
+});
+
+const backButton = document.querySelector(".back-button");
+backButton.addEventListener("click", () => {
+  for (let i = 0; i < days.length; ) {
+    days.shift();
+  }
+  document.querySelectorAll(".day").forEach((date) => {
+    date.remove();
+  });
+
+  renderDates(counter - 1);
+  counter--;
 });
