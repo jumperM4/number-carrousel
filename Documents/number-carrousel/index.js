@@ -1,21 +1,22 @@
 const body = document.querySelector("body");
 const div = document.createElement("div");
 body.append(div);
+const arrOfDates = [];
+
 
 function getDays(counter) {
   const date = new Date();
-  let day = date.getDate();
-  const dates = [];
+  let day = date.getDate() + counter;
 
-  for (let i = 0; i < counter; i++) {
-    if (dates.length === 0) {
-      dates.push(day);
+  for (let i = 0; i < 3; i++) {
+    if (arrOfDates.length === 0) {
+      arrOfDates.push(day);
     } else {
       day += 1;
-      dates.push(day);
+      arrOfDates.push(day);
     }
   }
-  return dates;
+  return arrOfDates;
 }
 
 function createBtns() {
@@ -29,8 +30,8 @@ function createBtns() {
   div.prepend(backBtn);
 }
 
-function dates() {
-  const arrOfDays = getDays(3);
+function dates(num) {
+  const arrOfDays = getDays(num);
 
   arrOfDays.forEach((day) => {
     const span = document.createElement("span");
@@ -41,5 +42,16 @@ function dates() {
   });
 }
 
-dates();
+dates(0);
 createBtns();
+
+const forwardButton = document.querySelector(".forward-button");
+
+forwardButton.addEventListener("click", () => {
+  for (let i = 0; i < arrOfDates.length; i++) {
+    arrOfDates.shift();
+  };
+  let counter = 1;
+  let arr = getDays(counter);
+  dates(arr);
+});
