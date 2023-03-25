@@ -3,7 +3,6 @@ const div = document.createElement("div");
 body.append(div);
 const arrOfDates = [];
 
-
 function getDays(counter) {
   const date = new Date();
   let day = date.getDate() + counter;
@@ -46,12 +45,14 @@ dates(0);
 createBtns();
 
 const forwardButton = document.querySelector(".forward-button");
-
+console.log(arrOfDates);
 forwardButton.addEventListener("click", () => {
-  for (let i = 0; i < arrOfDates.length; i++) {
+  for (let i = 0; i < arrOfDates.length; ) {
     arrOfDates.shift();
-  };
-  let counter = 1;
-  let arr = getDays(counter);
-  dates(arr);
+  }
+
+  const allDates = document.querySelectorAll(".day");
+  allDates.forEach((date) => {
+    date.remove();
+  });
 });
