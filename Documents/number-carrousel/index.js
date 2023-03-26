@@ -10,7 +10,7 @@ function getDays(counter) {
   // const date = new Date();
   // let day = date.getDate() + counter;
 
-  new Array(4).fill(0).forEach((_, index) => {
+  new Array(3).fill(0).forEach((_, index) => {
     const day = new Date();
     //day += 1;
     day.setDate(day.getDate() + counter + index);
