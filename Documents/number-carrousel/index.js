@@ -1,21 +1,31 @@
 const body = document.querySelector("body");
 const div = document.createElement("div");
 body.append(div);
+const allDaysDiv = document.createElement("all-days");
+div.append(allDaysDiv);
+const days = [];
+let counter = 0;
 
 function getDays(counter) {
-  const date = new Date();
-  let day = date.getDate();
-  const dates = [];
+  // const date = new Date();
+  // let day = date.getDate() + counter;
 
-  for (let i = 0; i < counter; i++) {
-    if (dates.length === 0) {
-      dates.push(day);
-    } else {
-      day += 1;
-      dates.push(day);
-    }
-  }
-  return dates;
+  new Array(3).fill(0).forEach((_, index) => {
+    const day = new Date();
+    //day += 1;
+    day.setDate(day.getDate() + counter + index);
+    days.push(day.getDate());
+  });
+  return days;
+  // for (let i = 0; i < 3; i++) {
+  //   if (days.length === 0) {
+  //     days.push(day);
+  //   } else {
+  //     day += 1;
+  //     days.push(day);
+  //   }
+  // }
+  // return days;
 }
 
 function createBtns() {
@@ -29,17 +39,43 @@ function createBtns() {
   div.prepend(backBtn);
 }
 
-function dates() {
-  const arrOfDays = getDays(3);
+function renderDates(num) {
+  const allDays = getDays(num);
 
-  arrOfDays.forEach((day) => {
+  allDays.forEach((day) => {
     const span = document.createElement("span");
-    span.className = "day";
     span.textContent = day;
+    span.className = "day";
 
-    div.append(span);
+    allDaysDiv.append(span);
   });
 }
 
-dates();
+renderDates(counter);
 createBtns();
+
+const forwardButton = document.querySelector(".forward-button");
+forwardButton.addEventListener("click", () => {
+  for (let i = 0; i < days.length; ) {
+    days.shift();
+  }
+  document.querySelectorAll(".day").forEach((date) => {
+    date.remove();
+  });
+
+  renderDates(counter + 1);
+  counter++;
+});
+
+const backButton = document.querySelector(".back-button");
+backButton.addEventListener("click", () => {
+  for (let i = 0; i < days.length; ) {
+    days.shift();
+  }
+  document.querySelectorAll(".day").forEach((date) => {
+    date.remove();
+  });
+
+  renderDates(counter - 1);
+  counter--;
+});
