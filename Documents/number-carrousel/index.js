@@ -7,18 +7,25 @@ const days = [];
 let counter = 0;
 
 function getDays(counter) {
-  const date = new Date();
-  let day = date.getDate() + counter;
+  // const date = new Date();
+  // let day = date.getDate() + counter;
 
-  for (let i = 0; i < 3; i++) {
-    if (days.length === 0) {
-      days.push(day);
-    } else {
-      day += 1;
-      days.push(day);
-    }
-  }
+  new Array(4).fill(0).forEach((_, index) => {
+    const day = new Date();
+    //day += 1;
+    day.setDate(day.getDate() + counter + index);
+    days.push(day.getDate());
+  });
   return days;
+  // for (let i = 0; i < 3; i++) {
+  //   if (days.length === 0) {
+  //     days.push(day);
+  //   } else {
+  //     day += 1;
+  //     days.push(day);
+  //   }
+  // }
+  // return days;
 }
 
 function createBtns() {
